@@ -57,14 +57,14 @@ app.post('/api/search', async (req, res) => {
         console.log(`📍 Navigating to: ${searchUrl}`);
         
         await page.goto(searchUrl, { 
-            waitUntil: 'networkidle2',
-            timeout: 30000 
+            waitUntil: 'domcontentloaded', // Changed from networkidle2 for faster load
+            timeout: 60000  // Increased to 60 seconds
         });
         
         console.log('⏳ Waiting for form to load...');
         
-        // Wait for search form
-        await page.waitForTimeout(3000);
+        // Wait for search form with longer timeout
+        await page.waitForTimeout(5000); // Give page time to fully render
         
         // Check for input fields
         const hasInputs = await page.evaluate(() => {
